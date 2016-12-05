@@ -20,6 +20,8 @@ action_space = npy.array([[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]]
 transition_space = 5
 backprop_belief = npy.zeros((discrete_size_y,discrete_size_x))
 
+trans_mat = npy.loadtxt("trans_model.txt").reshape(8,5,5)
+
 w = transition_space/2
 
 q_value_estimate = npy.ones((action_size,discrete_size_y,discrete_size_x))
@@ -85,13 +87,12 @@ def conv_layer():
 
 def backprop():	
 	belief_reward_backprop()	
-	beta_update_q_estimate()
+	# beta_update_q_estimate()
+	update_q_estimate()
 
 def feedback():
 	max_pool()
 	conv_layer()
-
-
 
 # for i in range(0,447):
 image_list = range(447)

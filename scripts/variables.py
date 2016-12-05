@@ -30,3 +30,10 @@ qmdp_values_softmax = npy.zeros(action_size)
 target_actions = npy.zeros(action_size)
 belief_target_actions = npy.zeros(action_size)
 
+optimal_policy = npy.zeros((discrete_size_y,discrete_size_x))
+
+gamma = 0.95
+time_limit = 100
+
+action_reward_function = npy.zeros((action_size,discrete_size_y,discrete_size_x))
+action_value_layers  = npy.zeros(shape=(action_size,discrete_size_y,discrete_size_x))
