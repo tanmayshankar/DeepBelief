@@ -95,37 +95,40 @@ def feedback():
 	conv_layer()
 
 # for i in range(0,447):
-image_list = range(447)
-counter = 0
-while image_list:
 
-	i = random.choice(image_list)
-	image_list.remove(i)
-	counter +=1
-	print("Running on Image",i)
-	print("Counter",counter)
+for e in range(0,5):
+	image_list = range(447)
+	counter = 0
+	while image_list:
+
+		i = random.choice(image_list)
+		image_list.remove(i)
+		counter +=1
+		print("Epoch:",e,"Image:",counter)
+		# print("Running on Image",i)
+		# print("Counter",counter)
 
 
-	score = npy.loadtxt('scores_{0}.txt'.format(i)).reshape(20,480,640)
-	bmap = npy.loadtxt('belief_maps_{0}.txt'.format(i)).reshape(10,480,640)
-	action_map = npy.loadtxt('action_map_{0}.txt'.format(i))
+		score = npy.loadtxt('scores_{0}.txt'.format(i)).reshape(20,480,640)
+		bmap = npy.loadtxt('belief_maps_{0}.txt'.format(i)).reshape(10,480,640)
+		action_map = npy.loadtxt('action_map_{0}.txt'.format(i))
 
-	for k in range(0,10):
+		for k in range(0,10):
 
-		# Parsing Data.
-		# belief = abs(score[11]*bmap[k])
-		belief = bmap[k]
-		belief = cv2.resize(belief,dsize=(64,48))
-		if (belief.sum()>0):
-			belief /= belief.sum()
+			# Parsing Data.
+			# belief = abs(score[11]*bmap[k])
+			belief = bmap[k]
+			belief = cv2.resize(belief,dsize=(64,48))
+			if (belief.sum()>0):
+				belief /= belief.sum()
 
-		target_actions[:]=0
-		target_actions[action_map[k]]=1
+			target_actions[:]=0
+			target_actions[action_map[k]]=1
 
-		backprop_belief = copy.deepcopy(belief)
+			backprop_belief = copy.deepcopy(belief)
 
-		backprop()
-		feedback()
+			backprop()
+			feedback()
 
 
 with file('Q_Value_Estimate.txt','w') as outfile:
