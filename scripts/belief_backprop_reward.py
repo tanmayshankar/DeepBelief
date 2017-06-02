@@ -20,7 +20,7 @@ action_space = npy.array([[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]]
 transition_space = 5
 backprop_belief = npy.zeros((discrete_size_y,discrete_size_x))
 
-trans_mat = npy.loadtxt("trans_model.txt").reshape(8,5,5)
+trans_mat = npy.loadtxt("../CARS_10/trans_model.txt").reshape(8,5,5)
 
 w = transition_space/2
 
@@ -96,7 +96,7 @@ def feedback():
 
 # for i in range(0,447):
 
-for e in range(0,5):
+for e in range(0,3):
 	image_list = range(447)
 	counter = 0
 	while image_list:
@@ -109,8 +109,8 @@ for e in range(0,5):
 		# print("Counter",counter)
 
 
-		score = npy.loadtxt('scores_{0}.txt'.format(i)).reshape(20,480,640)
-		bmap = npy.loadtxt('belief_maps_{0}.txt'.format(i)).reshape(10,480,640)
+		score = npy.loadtxt('../CARS_10/scores_{0}.txt'.format(i)).reshape(20,480,640)
+		bmap = npy.loadtxt('../CARS_10/belief_maps_{0}.txt'.format(i)).reshape(10,480,640)
 		action_map = npy.loadtxt('action_map_{0}.txt'.format(i))
 
 		for k in range(0,10):
@@ -130,20 +130,19 @@ for e in range(0,5):
 			backprop()
 			feedback()
 
+	with file('Q_Value_Estimate_{0}.txt'.format(e),'w') as outfile:
+		for data_slice in q_value_estimate:
+			outfile.write('#Q_Value_Estimate.\n')
+			npy.savetxt(outfile,data_slice,fmt='%-7.5f')
 
-with file('Q_Value_Estimate.txt','w') as outfile:
-	for data_slice in q_value_estimate:
-		outfile.write('#Q_Value_Estimate.\n')
-		npy.savetxt(outfile,data_slice,fmt='%-7.5f')
+	with file('Reward_Function_Estimate_{0}.txt'.format(e),'w') as outfile:
+		for data_slice in reward_estimate:
+			outfile.write('#Reward_Function_Estimate.\n')
+			npy.savetxt(outfile,data_slice,fmt='%-7.5f')
 
-with file('Reward_Function_Estimate.txt','w') as outfile:
-	for data_slice in reward_estimate:
-		outfile.write('#Reward_Function_Estimate.\n')
-		npy.savetxt(outfile,data_slice,fmt='%-7.5f')
-
-with file('Value_Function_Estimate.txt','w') as outfile:
-	outfile.write('#Value_Function_Estimate.\n')
-	npy.savetxt(outfile,value_function,fmt='%-7.5f')
+	with file('Value_Function_Estimate_{0}.txt'.format(e),'w') as outfile:
+		outfile.write('#Value_Function_Estimate.\n')
+		npy.savetxt(outfile,value_function,fmt='%-7.5f')
 
 
 

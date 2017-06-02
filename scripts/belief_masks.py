@@ -9,7 +9,7 @@ import os
 import scipy as scp
 import scipy.misc
 
-import numpy as np
+import numpy as npy
 import sys
 import matplotlib.pyplot as plt
 import copy

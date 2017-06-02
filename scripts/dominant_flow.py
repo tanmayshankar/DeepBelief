@@ -20,10 +20,10 @@ angle_range = npy.linspace(0,360,9)-180
 
 # action_space = npy.array([[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1])
 
-for i in range(0,447):	
+for i in range(0,448):	
 	print("Running on Image",i)
 
-	belief_maps = npy.loadtxt("belief_maps_{0}.txt".format(i)).reshape(10,480,640)	
+	belief_maps = npy.loadtxt("../CARS_10/belief_maps_{0}.txt".format(i)).reshape(10,480,640)	
 	flow = npy.loadtxt("flow_{0}.txt".format(i)).reshape(480,640,2)
 	action_map = npy.zeros(10)
 
